@@ -1,0 +1,48 @@
+{
+  "description": "One line, at most 120 characters. Shown on the server profile.",
+  "invite_channel": "rules",
+  "revoke_other_invites": true,
+  "roles": [
+    {"key": "organizer", "name": "Organizer", "color": "#ff6b5e", "hoist": true, "mentionable": true,
+     "perms": ["VIEW", "SEND", "MANAGE_MESSAGES", "HISTORY", "REACT", "EMBED", "ATTACH"]},
+    {"key": "member", "name": "Member", "color": "#5aa9ff", "hoist": true, "mentionable": true,
+     "perms": ["VIEW", "SEND", "HISTORY", "REACT", "EMBED", "ATTACH"]}
+  ],
+  "categories": [
+    {"key": "start", "name": "━━ 👋 START HERE ━━", "match": "START HERE", "channels": [
+      {"key": "rules", "slug": "rules", "name": "📜｜rules", "type": "text", "access": "read_only",
+       "topic": "Read first."},
+      {"key": "announcements", "slug": "announcements", "name": "📢｜announcements", "type": "announcement", "access": "read_only",
+       "writers": ["organizer"], "topic": "Official updates. Follow this channel to get them in your own server."}
+    ]},
+    {"key": "community", "name": "━━ 💬 COMMUNITY ━━", "match": "COMMUNITY", "channels": [
+      {"key": "help", "slug": "help", "name": "🆘｜help", "type": "text", "access": "public",
+       "topic": "Ask a question. Include the exact error text. Never paste keys or tokens."},
+      {"key": "general", "slug": "general", "name": "💬｜general", "type": "text", "access": "public",
+       "topic": "Chat with other members."},
+      {"key": "lounge", "slug": "lounge", "name": "🔊｜lounge", "type": "voice", "access": "public"},
+      {"key": "stage", "slug": "stage", "name": "🎤｜stage", "type": "stage", "access": "private", "private_roles": ["organizer"]}
+    ]},
+    {"key": "organizers", "name": "━━ 🔒 ORGANIZERS ━━", "match": "ORGANIZERS", "channels": [
+      {"key": "organizers", "slug": "organizers", "name": "🔒｜organizers", "type": "text", "access": "private",
+       "private_roles": ["organizer"], "topic": "Private. For organizers only."}
+    ]}
+  ],
+  "pins": [
+    {"channel": "rules", "title": "**Welcome**", "body": "Be kind and keep it on topic.\n\n**Start here**\n1. {{channel:help}} - ask a question.\n2. {{channel:general}} - chat.\n3. {{channel:announcements}} - official updates."},
+    {"channel": "help", "title": "**Rules for #help**", "body": "- Say what you tried and paste the exact error text.\n- Never paste keys, tokens or passwords.\n- Questions for organizers: {{role:organizer}}"}
+  ],
+  "first_posts": [
+    {"channel": "announcements", "body": "Welcome. This is the first announcement."}
+  ],
+  "events": [
+    {"name": "Kickoff", "start": "2026-01-01T10:00:00+08:00", "end": "2026-01-01T12:00:00+08:00",
+     "location": "Online - follow #announcements", "description": "Agenda here."}
+  ],
+  "onboarding": {"default_channels": ["rules", "help", "general"]},
+  "rules_screening": {
+    "description": "Read and accept the rules to join.",
+    "label": "I have read and agree to the rules",
+    "rules": ["Be kind.", "Keep it on topic.", "Never post keys or tokens."]
+  }
+}

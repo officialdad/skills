@@ -1,0 +1,16 @@
+services:
+  help-bot:
+    build: ./llmcord
+    restart: unless-stopped
+    env_file: .env
+    command: ["python", "/ext/run.py"]
+    volumes:
+      - ./bot/run.py:/ext/run.py:ro
+      # The next three are needed only when the key claim or team features are on.
+      - ./bot/keyclaim.py:/ext/keyclaim.py:ro
+      - ./bot/teams.py:/ext/teams.py:ro
+      - ./bot/teamflow.py:/ext/teamflow.py:ro
+      - ./llmcord/config.yaml:/app/config.yaml:ro
+      # The key list stays outside the image and outside any prompt. Claims persist across restarts.
+      - ./secrets/keys.csv:/secrets/keys.csv:ro
+      - ./data:/data

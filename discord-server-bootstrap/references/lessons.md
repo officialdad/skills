@@ -13,6 +13,11 @@ Each item cost time once. Read this before you debug.
 - **Banner:** needs boost level 2. Do not try it on a new server.
 - **Role colors on managed bot roles:** the API ignores a color change. Change it by hand in Server Settings > Roles.
 - **Raid detection:** a burst of joins turns on a DM pause for about two hours. It does not stop invites, chat or voice. The bot's ephemeral replies are unaffected.
+- **Forum channels:** type 15. They need the Community feature. Create a post with `POST /channels/{forum}/threads` carrying `name` and a `message` object. The opening message id equals the thread id.
+- **Silent posts:** message flag `4096` suppresses the notification. A forum post accepts it inside `message.flags`.
+- **Pinned forum post:** `PATCH /channels/{thread}` with `flags` set to `2`. Discord allows one pinned post per forum.
+- **Archived posts:** a forum post archives after inactivity. List them with `GET /channels/{forum}/threads/archived/public`, and unarchive before you edit the opening message. `GET /guilds/{id}/threads/active` lists the open ones.
+- **Invite listing:** `GET /guilds/{id}/invites` needs Manage Server. An Administrator bot has it. A narrower bot gets 403.
 - **Pins:** find a pin by its bold first line. A hidden marker such as `[jam-welcome]` shows to readers.
 - **Mentions:** roles ping only in plain message content. An embed does not ping. Pass `allowed_mentions` with the exact users or roles.
 - **Timestamps:** write `<t:UNIX:f> (<t:UNIX:R>)` for a deadline. It shows in each reader's own time zone with a live countdown.

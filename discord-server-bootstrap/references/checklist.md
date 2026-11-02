@@ -15,9 +15,12 @@ Run each item. Report any item you cannot run as unconfirmed.
 - [ ] List channels. Each name and category matches the spec.
 - [ ] Open the server as a member with no roles. Only the intended channels show.
 - [ ] Read each pin. No marker text, no `{{...}}` placeholder.
-- [ ] Count invites. One permanent invite remains.
+- [ ] Count invites. One permanent invite remains when the spec has `invite_channel`. No new invite exists when it does not.
 - [ ] Open the invite in a private window with a fresh account. The rules screen shows, then the welcome channel.
 - [ ] Check onboarding default channels.
+- [ ] For each forum, read back its posts through the API. Titles match the spec and the pinned post is pinned.
+- [ ] Open each forum as a member. The post list, the layout, and posting a reply all work. A bot cannot test this, so a human must.
+- [ ] Check no forum post notified anyone.
 
 ## Help bot
 

@@ -12,6 +12,7 @@ An Administrator bot builds the server. The user does not click through Discord 
 Ask only for what the repo and the user message do not give.
 
 - Community name, topic, and the dates that matter.
+- Whether any channel is a forum, and which posts it opens with.
 - Roles, and who can write where.
 - Channel list, grouped in categories.
 - Whether the help bot, key claiming and teams are wanted.
@@ -37,19 +38,36 @@ The example in `templates/server/server-spec.example.json` shows every field.
 |---|---|
 | `roles[]` | `key`, `name`, `color`, `hoist`, `mentionable`, `perms` (permission names) |
 | `categories[]` | `key`, `name`, `match` (a substring that finds an existing category), `channels[]` |
-| `channels[]` | `key`, `slug`, `name`, `type`, `access`, `topic`, `writers`, `private_roles` |
-| `pins[]` | `channel`, `title` (bold first line, used to find the pin), `body` |
-| `first_posts[]` | A message posted only when the channel is empty |
+| `channels[]` | `key`, `slug`, `name`, `type`, `access`, `topic`, `writers`, `private_roles`, `layout` (forums only) |
+| `pins[]` | `channel`, `title` (bold first line, used to find the pin), `body`, optional `silent` (default false) |
+| `first_posts[]` | A message posted only when the channel is empty. Optional `silent` (default false) |
+| `forum_posts[]` | `channel` (a forum key), `title`, `body`, optional `pinned`, optional `silent` (default true) |
 | `events[]` | Scheduled events with ISO 8601 times and an offset |
 | `onboarding` | `default_channels` |
 | `rules_screening` | `description`, `label`, `rules` |
-| `invite_channel` | The channel key where the permanent invite lands |
+| `invite_channel` | Optional. The channel key where the permanent invite lands. Omit it for a private server and no invite is made |
+| `revoke_other_invites` | Optional, default false. Deletes every invite except the permanent one |
+
+`roles` is optional. A server with no roles uses `public` channels only.
 
 Placeholders in pin bodies: `{{channel:KEY}}` becomes a channel mention. `{{role:KEY}}` becomes a role mention.
 
 ### Channel types
 
-`text`, `announcement`, `voice`, `stage`.
+`text`, `announcement`, `voice`, `stage`, `forum`.
+
+A forum needs the Community feature. The build sets the forum to list layout (`"layout": "gallery"` switches it) and a 7 day auto-archive, so posts stay open between visits.
+
+### Forum posts
+
+- A post is matched by `title` inside its forum. A rerun creates nothing twice and edits the opening message when the text changed.
+- Titles are at most 100 characters. Bodies are at most 2000 characters.
+- `pinned` pins the post to the top of the forum. Discord allows one pinned post per forum.
+- Posts are silent by default (message flag `SUPPRESS_NOTIFICATIONS`), so a bulk build pings nobody. Set `"silent": false` to notify.
+- A forum lists newest activity first. The last post created shows on top, so order the array to suit.
+- The build pauses 1 second after each new post and retries on a 429.
+- Wrap a URL in `<...>` to hide its link preview.
+- Pins and `first_posts` do not work in a forum. Use a pinned `forum_posts` entry.
 
 ### Access modes
 
@@ -70,7 +88,9 @@ Placeholders in pin bodies: `{{channel:KEY}}` becomes a channel mention. `{{role
 - Never print a token or key. Mask values when you show `.env`.
 - Never write secrets to the spec, the knowledge file or the bot prompt.
 - Revoke other invites only when `revoke_other_invites` is true, and tell the user the count first.
-- The build has not run against a live server in this skill's test pass. Only `--check-spec` and a syntax check ran. Run the first build on a throwaway server, or tell the user the first run is unconfirmed.
+- Listing invites needs Manage Server. If the call fails, the build warns and skips the invite step.
+- The env file is written as soon as channel and role ids exist and again on exit, so a failed run keeps its ids. The write is atomic and never erases ids it does not know yet.
+- The forum, forum post and no-invite paths ran against a live Community server with an Administrator bot. The onboarding, rules screening, events and permanent invite paths are older and less tested. Say which paths the first run on a new server leaves unconfirmed.
 
 ## Using the same bot in another server
 

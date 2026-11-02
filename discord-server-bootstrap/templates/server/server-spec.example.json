@@ -1,7 +1,7 @@
 {
   "description": "One line, at most 120 characters. Shown on the server profile.",
   "invite_channel": "rules",
-  "revoke_other_invites": true,
+  "revoke_other_invites": false,
   "roles": [
     {"key": "organizer", "name": "Organizer", "color": "#ff6b5e", "hoist": true, "mentionable": true,
      "perms": ["VIEW", "SEND", "MANAGE_MESSAGES", "HISTORY", "REACT", "EMBED", "ATTACH"]},
@@ -20,6 +20,8 @@
        "topic": "Ask a question. Include the exact error text. Never paste keys or tokens."},
       {"key": "general", "slug": "general", "name": "💬｜general", "type": "text", "access": "public",
        "topic": "Chat with other members."},
+      {"key": "projects", "slug": "projects", "name": "🗂｜projects", "type": "forum", "access": "public", "layout": "list",
+       "topic": "One post per project. Post updates and decisions inside that project's post."},
       {"key": "lounge", "slug": "lounge", "name": "🔊｜lounge", "type": "voice", "access": "public"},
       {"key": "stage", "slug": "stage", "name": "🎤｜stage", "type": "stage", "access": "private", "private_roles": ["organizer"]}
     ]},
@@ -31,6 +33,14 @@
   "pins": [
     {"channel": "rules", "title": "**Welcome**", "body": "Be kind and keep it on topic.\n\n**Start here**\n1. {{channel:help}} - ask a question.\n2. {{channel:general}} - chat.\n3. {{channel:announcements}} - official updates."},
     {"channel": "help", "title": "**Rules for #help**", "body": "- Say what you tried and paste the exact error text.\n- Never paste keys, tokens or passwords.\n- Questions for organizers: {{role:organizer}}"}
+  ],
+  "forum_posts": [
+    {"channel": "projects", "title": "Read first", "pinned": true,
+     "body": "Each project has one post here. Reply inside it. Alerts go to {{channel:help}}."},
+    {"channel": "projects", "title": "alpha",
+     "body": "**Repo:** <https://example.com/alpha>\n**What:** The first project.\n**Merge rule:** merge on green."},
+    {"channel": "projects", "title": "beta", "silent": false,
+     "body": "**Repo:** <https://example.com/beta>\n**What:** The second project.\n**Merge rule:** needs approval."}
   ],
   "first_posts": [
     {"channel": "announcements", "body": "Welcome. This is the first announcement."}

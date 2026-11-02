@@ -20,13 +20,13 @@ Keep the file `.env` at mode 600. Never print values. Mask them when you inspect
 
 ## Written by `bootstrap.sh`
 
-The builder replaces these on every run. Never edit them by hand.
+The builder replaces these on every run and writes them as soon as the ids exist. Never edit them by hand. A key removed from the spec keeps its old line until you delete it.
 
 | Variable | Meaning |
 |---|---|
 | `DISCORD_<KEY>_CHANNEL_ID` | One per channel in the spec. `<KEY>` is the channel `key`, upper case, with `-` as `_` |
 | `DISCORD_<KEY>_ROLE_ID` | One per role in the spec |
-| `DISCORD_INVITE_URL` | The permanent invite |
+| `DISCORD_INVITE_URL` | The permanent invite. Absent when the spec has no `invite_channel` |
 
 ## Switches the help bot reads
 

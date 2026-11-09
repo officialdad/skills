@@ -1,5 +1,7 @@
 # Shaders
 
+Source: [shading language, Godot 4.7](https://docs.godotengine.org/en/4.7/tutorials/shaders/shader_reference/shading_language.html).
+
 ## Uniforms
 
 Syntax: `uniform type name : hints = default;`
@@ -24,8 +26,9 @@ Syntax: `uniform type name : hints = default;`
 | Group | `group_uniforms group_name;` and `group_uniforms name.subname;` |
 | End group | `group_uniforms;` |
 | Precision | `lowp` `mediump` `highp` |
-| Doc comment | `/** text */` above the uniform |
+| Comment | `// text` above the uniform. `/** text */` shows as an inspector tooltip and is optional. |
 
+- Add `source_color` to a color uniform only when GDScript passes it an sRGB color. Never add it to `ink`, `lit_tint`, or `shade_tint`. `src/cel/cel_figure.gd` converts `ink` to linear and sets the tints raw. `source_color` adds a second conversion and changes the picture.
 - Read the Godot docs before using `instance uniform`, `global uniform`, or precision qualifiers.
 - Toggle comments with Ctrl+K in the shader editor.
 - Types: `mat2/3/4`, `ivec2/3/4`, `uvec2/3/4`, `bvec2/3/4`, `isampler2D/3D/2DArray`, `usampler2D/3D/2DArray`, `samplerCube`, `samplerCubeArray`.
@@ -53,7 +56,7 @@ Syntax: `uniform sampler2D my_texture : source_color, repeat_enable;`
 | Screen texture | `hint_screen_texture` |
 | Depth texture | `hint_depth_texture` (spatial shader only) |
 
-Pixel art: use `filter_nearest` on every sprite texture.
+The project has no pixel art. Its textures use `filter_linear_mipmap`. Use the same hint on a new texture.
 
 ## Set shader parameters from GDScript
 

@@ -1,9 +1,14 @@
 # Doc comments
 
-Write a `##` doc comment for every class, exported var, signal, enum, const, and public function. Use static typing on every var, parameter, and return value.
+Source: [GDScript documentation comments, Godot 4.7](https://docs.godotengine.org/en/4.7/tutorials/scripting/gdscript/gdscript_documentation_comments.html).
+
+Write a `##` doc comment for every class, inner class, exported var, signal, enum, const, and public function. Use static typing on every var, parameter, and return value.
+
+In `tests/`, write the script-level `##` only. Skip `##` on test functions, helpers, and constants. See `decisions.md`.
 
 ```gdscript
 class_name ExampleClass
+extends Node
 ## Class role (short).
 ##
 ## Script description and details (long).
@@ -12,17 +17,24 @@ class_name ExampleClass
 ## @tutorial(text shown): url
 ## @experimental
 
-enum Animal { ## inline description
-	DOG, ## adult puppy
-	CAT, ## adult kitty
+enum Animal { ## Inline description.
+	DOG, ## Adult puppy.
+	CAT, ## Adult kitty.
 }
+
 ## Description of var, signal, const, or enum.
 var player_speed: float = 50.0
 
+
 ## [b]Heals[/b] [Player] by [param amount].
-func add_coolness_point(amount: int):
+func add_coolness_point(amount: int) -> void:
+	pass
 ```
 
+- Put the `##` block directly above the member or its annotations. A blank line detaches it.
+- Write `[br]` at the end of each list line. The editor joins plain `##` lines into one paragraph.
+- Write `[lb]` and `[rb]` for a literal `[` and `]`.
+- Write `[code]` for inline code. Never use Markdown backticks.
 - Put `[b]Note:[/b]` or `[b]Warning:[/b]` at the end of a doc comment, after a `[br]`.
 - Put `@deprecated:` or `@experimental:` at the very end of a doc comment. Text after the tag is optional.
 
